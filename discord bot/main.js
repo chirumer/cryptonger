@@ -23,32 +23,34 @@ client.on('message', msg => {
 	    'answers' : []
 	});
     }
-    if (msg.content == '!start quiz' && msg.author.id in settings['admin-ids']) {
-	start_quiz();
+    if (msg.content == '!start quiz' && settings['admin-ids'].includes(msg.author.id)) {
+	start_quiz(participants);
     }
 });
 
-function start_quiz() {
+async function start_quiz(participants) {
+    outcomes = []
     for (participant of participants) {
-	quiz(participant, start_countdown, time_per_question);
+	outcomes.push(quiz(participant, start_countdown, time_per_question));
     }
-    while (!is_quiz_over()) {
-	sleep(100);
-    }
+    outcomes = await Promise.all(outcomes);
+    console.log('all done');
     print_leaderboard();
 }
 
-async function quiz(user, start_countdown, time_per_question) {
-    msg = await user.send('starting quiz..');
-    while (start_countdown) {
-	await msg.edit(`Quiz starting in ${start_countdown}s`);
-	sleep(1000);
+async function quiz(participant, start_countdown, time_per_question) {
+    msg = await participant.user.send('starting quiz..');
+    while (start_countdown--) {
+	await console.log(participant.user.id, start_countdown);
+//	await msg.edit(`Quiz starting in ${start_countdown}s`);
+	await participant.user.send(`Quiz starting in ${start_countdown}s`);
+	await sleep(1000);
     }
     await msg.delete();
 }
 
 async function sleep(milliseconds) {
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
 }
 
 function is_quiz_over() {
@@ -57,6 +59,9 @@ function is_quiz_over() {
 	    return false;
     }
     return true;
+}
+
+function print_leaderboard() {
 }
 
 client.login(credentials['bot-token']);
