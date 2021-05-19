@@ -38,15 +38,22 @@ async function start_quiz(participants) {
     print_leaderboard();
 }
 
+let val = ['a', 'b']; 
+
 async function quiz(participant, start_countdown, time_per_question) {
-    msg = await participant.user.send('starting quiz..');
-    while (start_countdown--) {
+    msg = participant.user.id;
+    console.log(msg);
+    
+    //await participant.user.send('starting quiz..');
+/*    while (start_countdown--) {
 	await console.log(participant.user.id, start_countdown);
 //	await msg.edit(`Quiz starting in ${start_countdown}s`);
 	await participant.user.send(`Quiz starting in ${start_countdown}s`);
 	await sleep(1000);
-    }
-    await msg.delete();
+    }*/
+    await sleep(4000);
+//    await msg.delete();
+    console.log(msg);
 }
 
 async function sleep(milliseconds) {
