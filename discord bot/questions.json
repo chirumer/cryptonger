@@ -1,0 +1,11 @@
+[
+    { 
+        "question" : "Which is the best website in the world?",
+        "options" : [
+                        "cryptonger.com",
+                        "youtube.com",
+                        "lichess.com",
+                        "google.com"
+                    ]   
+    }
+]
