@@ -95,16 +95,17 @@ client.on('message', async msg => {
                         + `**time left: ${i}**`
                     );
                 }
-                active_reactions.forEach((reaction, reaction_index) => () {
+                active_reactions.forEach((reaction, reaction_index) => {
                     reaction.users.cache.each(user => {
+                        if (user.bot) { return; }
                         if (!(user.id in participants)) {
                             participants[user.id] = { answers : [] };
                         }
-                        if (participants[user.id][index] == undefined) {
-                            participants[user.id][index] = reaction_index;
+                        if (participants[user.id].answers[index] == undefined) {
+                            participants[user.id].answers[index] = reaction_index;
                         }
                         else {
-
+                            participants[user.id].answers[index] = 'disqualified';
                         }
                     });
                 });
@@ -121,9 +122,44 @@ client.on('message', async msg => {
                 active_reactions = []            
             }
             //current_question = null;
-            quiz_channel.send('processing');
+            quiz_channel.send('users that participated and their stats: ');
+            
+            for (const participant_id in participants) {
+                console.log(`id:${participant_id}`);
 
-           // console.log(participants);
+                participant = participants[participant_id];
+                participant_stats = '';
+
+                corrects = 0;
+                wrongs = 0;
+                disqualifieds = 0;
+                noresponses = 0;
+                difficulty_points = 0;
+
+                for (const [index, question] of questions.entries()) {
+                    console.log(`ans:${participant.answers[index]}, actual:${question['answer-index']}, index: ${index}`);
+                    switch(participant.answers[index]) {
+                        case undefined:
+                            ++noresponses;
+                            break;
+                        case question['answer-index']:
+                            ++corrects;
+                            difficulty_points += question.difficulty;
+                            break;
+                        case 'disqualified':
+                            ++disqualifieds;
+                            break;
+                        default:
+                            ++wrongs;
+                    }
+                }
+
+                participant_stats += `<@${participant_id}>: ${corrects} correct, ${wrongs} wrong, ${noresponses} not attempted, ${disqualifieds} disqualified, ${difficulty_points} difficulty points`;
+                quiz_channel.send(participant_stats + '\n' + participants[participant_id]);
+            }
+            
+
+            console.log(participants);
 
 
         }
