@@ -6,15 +6,22 @@ app.use(express.static('public'));
 
 const questions = require('./questions.json');
 
-app.get('/questions.json', function(req, res) {
-    if (!taking_responses()) {
-	console.log('attempt to get questions.json');
+app.get('/is-quiz-open', function(req, res) {
+    if (true /*check current time*/) {
+	console.log('registering a user');
 	res.header('Content-Type', 'application/json');
-	res.send('[]');
+	res.send('{ "is_open" : true }');
     }
-    console.log('serving questions.json');
-    res.header('Content-Type', 'application/json');
-    res.send(JSON.stringify(questions));
+    else {
+	console.log('user cannot register');
+	res.header('Content-Type', 'application/json');
+	res.send('{ "is_open" : false }');
+    }
+});
+
+app.post('/register-user', function(req, res) {
+    console.log(req);
+    res.sendStatus(200);
 });
 
 if (!module.parent) {
