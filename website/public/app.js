@@ -64,7 +64,15 @@ async function start_quiz() {
     const { is_open }  = await response.json();
 
     if (!is_open) {
-	container.innerHTML = 'not yet started';
+	container.innerHTML = 'quiz not open yet or closed';
+	return;
+    }
+
+    response = await fetch('/is-registered');
+    const { is_registered } = await response.json();
+
+    if (is_registered) {
+	quiz();
 	return;
     }
 
@@ -90,21 +98,26 @@ async function register_user() {
 
     if (response.ok) {
 	console.log('sent user data successfully');
+	quiz();
     }
 }
 
 async function quiz() {
     container.innerHTML = quiz_html;
 
-    while (question(container));
+    while (await question(container));
 
-    container.innertHTML = 'quiz over';
+    console.log('user out of questions');
 
+    container.innertHTML = '';
+    container.innerText = 'quiz over';
 }
 
 async function question(container) {
-    let response = await fetch('/next-question');
+    let response = await fetch('/get-question');
     const data = await response.json();
+
+    console.log(data);
 
     if (data == null) {
 	return false;
