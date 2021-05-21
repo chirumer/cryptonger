@@ -3,6 +3,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.static('public'));
+app.use(express.json());
 
 const questions = require('./questions.json');
 
@@ -20,7 +21,8 @@ app.get('/is-quiz-open', function(req, res) {
 });
 
 app.post('/register-user', function(req, res) {
-    console.log(req);
+    const user = req.body;
+    console.log(user);
     res.sendStatus(200);
 });
 

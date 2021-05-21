@@ -3,8 +3,7 @@ server_url = 'http://localhost:3000'
 let container;
 
 const registration_html = (
-
-'<form action="" onSubmit="register_user()">' +
+'<div>' + 
 '<ul>' + 
 '    <li>' + 
 '	<label for="name">Name:</label>' + 
@@ -16,32 +15,100 @@ const registration_html = (
 '    </li>' + 
 '    <li>' + 
 '	<label for="telephone">Phone Number:</label>' + 
-'	<input type="tel" id="telephone" name="user_number">' + 
+'	<input type="tel" id="telephone" name="user_phone">' + 
 '    </li>' + 
 '    <li>' +
-'       <button type="submit">Go</button>' +
+'       <button onclick="register_user()">Go</button>' +
 '    </li>' +
-'</form>' 
-
+'</ul>' +
+'</div>'
 );
+
+const quiz_html = (
+`
+	<div id="quiz-body">
+	    <h2 id="question"> Question </h2>
+
+	    <ul>
+		<li>
+		    <input type="radio" name="answer" id="a" class="answer" />
+		    <label id="a_text"> Option </label>
+		</li>
+		<li>
+		    <input type="radio" name="answer" id="b" class="answer" />
+		    <label id="b_text"> Option </label>
+		</li>
+		<li>
+		    <input type="radio" name="answer" id="c" class="answer" />
+		    <label id="c_text"> Option </label>
+		</li>
+		<li>
+		    <input type="radio" name="answer" id="d" class="answer" />
+		    <label id="d_text"> Option </label>
+		</li>
+	    </ul>
+
+	</div>
+
+	<button id="submit"> Submit </button>
+`
+);
+ 
 
 function setup() {
     container = document.getElementById('quiz-container');
 }
 
 async function start_quiz() {
-    let response = await fetch(server_url + '/is-quiz-open');
+    let response = await fetch('/is-quiz-open');
     const { is_open }  = await response.json();
 
-    if (is_open) {
-	container.innerHTML = registration_html;
-    }
-    else {
+    if (!is_open) {
 	container.innerHTML = 'not yet started';
+	return;
+    }
+
+    container.innerHTML = registration_html;
+}
+
+async function register_user() {
+    console.log('registering user');
+    const user_name = document.getElementById("name").value;
+    const user_email = document.getElementById("mail").value;
+    const user_phone = document.getElementById("telephone").value;
+
+    const user = { user_name, user_email, user_phone };
+    console.log(user);
+
+    let response = await fetch('/register-user', {
+	method: 'POST',
+	headers: {
+	    'Content-Type': 'application/json' /*;charset=utf8'*/
+	},
+	body: JSON.stringify(user)
+    });
+
+    if (response.ok) {
+	console.log('sent user data successfully');
     }
 }
 
-function register_user() {
-    console.log('registering user');
+async function quiz() {
+    container.innerHTML = quiz_html;
 
+    while (question(container));
+
+    container.innertHTML = 'quiz over';
+
+}
+
+async function question(container) {
+    let response = await fetch('/next-question');
+    const data = await response.json();
+
+    if (data == null) {
+	return false;
+    }
+
+    const { question } = data;
 }
