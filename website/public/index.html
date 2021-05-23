@@ -7,16 +7,18 @@
 </head>
 
 <body onload="setup()">
-    <main id="quiz-container">
-	<p>
-	The quiz will open at 5:00 pm. Responses are accepted until 5:30 pm.
-	All questions have a timer.
-
-	clarifications: (eg. what happens if I disconnect)
-	<div>
-	    <button id="start" onclick="start_quiz()"> Start </button>
-	</div>
-    </main>
+	<main id="container">
+	    <div id="quiz-container">
+		<p>
+		This version is a basic skeleton. It loads the questions one 
+		at a time. It remembers which question you were on in
+		case you disconnect or reload the page (and displays that question).
+		Need to connect it to database, style it, add a timer animation.
+		<div>
+		    <button id="start" onclick="start_quiz()"> Start </button>
+		</div>
+	    </div>
+	</main>
 </body>
 
 </html>

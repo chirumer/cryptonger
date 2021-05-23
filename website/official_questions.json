@@ -1,0 +1,186 @@
+[
+    {
+       "question" : "What are Bitcoin Futures?",
+        "options" : [
+                        "Price prediction horoscopes for Bitcoin",
+                        "A financial instrument giving you the right to always buy Bitcoin at a cheaper price",
+                        "A financial instrument giving you the right to buy a quantity of Bitcoin at a set price at a given future date",
+                        "A financial instrument giving you the right to buy a quantity of Bitcoin at a set price at a given date that is at least one year in the future"
+                    ],
+        "answer-index" : 2,
+        "difficulty" : 100
+    },
+
+    {
+        "question" : "What is a Bitcoin double spend?",
+        "options" : [
+                        "Trying to spend the same Bitcoin twice",
+                        "Sending Bitcoin from one wallet to another",
+                        "Generating two Bitcoins from mining fees",
+                        "When a Mining node generates a false transaction to delay its competitors"
+                    ],
+        "answer-index" : 0,
+        "difficulty" : 100
+    },
+
+    {
+        "question" : "What is Bitcoin Cloud Mining?",
+        "options" : [
+                        "Running your mining computer with extra cooling",
+                        "A bias in the Bitcoin protocol to nodes placed closer together",
+                        "Outsourcing the day to day maintenance of mining to a third party",
+                        "A way of pooling miners to generate higher returns"
+                    ],
+        "answer-index" : 2,
+        "difficulty" : 100
+    },
+
+    {
+        "question" : "Which of these US states introduced the BitLicense regulation for cryptocurrency companies?",
+        "options" : [
+                        "California",
+                        "Texas",
+                        "Washington",
+                        "New York"
+                    ],
+        "answer-index" : 3,
+        "difficulty" : 100
+    },
+
+
+    {
+        "question" : "Which of these is not a risk associated with cryptocurrency trading?",
+        "options" : [
+                        "The industry is largely unregulated, so many of the policies offered by crypto exchanges are not enforceable",
+                        "Trading only takes place during U.S. business hours, so it’s easy to miss out on price movements",
+                        "Funds in exchanges can be put at risk if the trading platform is shut down, hacked or bankrupted by its owners",
+                        "None of these"
+                    ],
+        "answer-index" : 1,
+        "difficulty" : 100
+    },
+
+    {
+        "question" : "cryptology",
+        "options" : [
+                        "coded message",
+                        "original message",
+                        "recovering ciphertext from plaintext",
+                        "field of both cryptography and cryptanalysis"
+                    ],
+        "answer-index" : 3,
+        "difficulty" : 100
+    },
+
+    {
+        "question" : "cryptography",
+        "options" : [
+                        "study of principles/methods of deciphering ciphertext without knowing key",
+                        "study of encryption principles/methods",
+                        "field of both cryptography and cryptanalysis",
+                        "coded message"
+                    ],
+        "answer-index" : 1,
+        "difficulty" : 100
+    },
+
+    
+    {
+        "question" : "cryptanalysis",
+        "options" : [
+                        "field of both cryptography and cryptanalysis",
+                        "study of encryption principles/methods",
+                        "study of principles/methods of deciphering ciphertext without knowing key",
+                        "converting plaintext to ciphertext"
+                    ],
+        "answer-index" : 2,
+        "difficulty" : 100
+    },
+
+     {
+        "question" : "Bitcoin was the first and is the most successful of all the cryptocurrencies. All the other coins are grouped together under this category.",
+        "options" : [
+                        "Bitcoin",
+                        "Altcoins",
+                        "Cryptocurrency",
+                        "Circulating Supplyt"
+                    ],
+        "answer-index" : 1,
+        "difficulty" : 100
+    },
+
+    {
+        "question" : "What is the name of the general ledger that tracks all bitcoin transactions?",
+        "options" : [
+                        "The Block Chain",
+                        "The Gox Chain",
+                        "Ledger Link",
+                        "Satoshi Square"
+                    ],
+        "answer-index" : 0,
+        "difficulty" : 100
+    },
+
+    
+    {
+        "question" : "What is necessary for Bitcoin?",
+        "options" : [
+                        "bank",
+                        "internet",
+                        "government",
+                        "oxygen"
+                    ],
+        "answer-index" : 1,
+        "difficulty" : 100
+    },
+
+    {
+        "question" : "Bitcoin was launched in",
+        "options" : [
+                        "2018",
+                        "2015",
+                        "2011",
+                        "2009"
+                    ],
+        "answer-index" : 3,
+        "difficulty" : 100
+    },
+
+    {
+        "question" : "Where was Bitcoin used to purchase items during an economic crisis?",
+        "options" : [
+                        "Haiti",
+                        "Nigeria",
+                        "Russia",
+                        "Venzuela"
+                    ],
+        "answer-index" : 3,
+        "difficulty" : 100
+    },
+
+    {
+        "question" : "Which of the following is an example of a Cryptographic Hash Function Algorithm?",
+        "options" : [
+                        "ECB",
+                        "CBC",
+                        "OFB",
+                        "SHA-256"
+                    ],
+        "answer-index" : 3,
+        "difficulty" : 100
+    },
+
+    {
+        "question" : "It is used to determine whether a message actually came from the sender that is expected and whether the message hasn't tampered with.",
+        "options" : [
+                        "Hash",
+                        "Key",
+                        "Tag",
+                        "Plain Text"
+                    ],
+        "answer-index" : 2,
+        "difficulty" : 100
+    }
+
+
+]
