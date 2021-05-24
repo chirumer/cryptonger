@@ -1,4 +1,6 @@
 let container;
+let timer_time_left;
+let timer_set_time_out;
 
 const not_open_html = (
 `
@@ -34,7 +36,13 @@ const registration_html = (
 
 const quiz_html = (
 `
-	<div id="quiz-body">
+	<div id="timer-container">
+	    <div id="time-display">
+		time left:
+	    </div>
+	</div>
+
+	<div id="quiz-container">
 	    <h2 id="question"> Question </h2>
 
 	    <ul>
@@ -141,7 +149,7 @@ async function question() {
 	return;
     }
 
-    const { question, options } = data;
+    const { question, options, time_left } = data;
     console.log(options);
     const question_element = document.getElementById('question');
     const option_a = document.getElementById('a_text');
@@ -154,6 +162,16 @@ async function question() {
     option_c.innerHTML = options[2];
     option_d.innerHTML = options[3];
     
+    const timer = document.getElementById('time-display');
+    timer_time_left = time_left/1000-1;
+    timer.innerHTML = `time left: ${timer_time_left}`;
+    timer_set_time_out = setInterval(() => {
+	--timer_time_left;
+	timer.innerHTML = `time left: ${timer_time_left}`;
+	if (timer_time_left == 0) {
+	    clearInterval(timer_set_time_out);
+	}
+    }, 950);
 }
 
 async function submit_question() {
@@ -176,6 +194,8 @@ async function submit_question() {
     if (answer == undefined)
 	return; // no option selected
 
+    clearInterval(timer_set_time_out);
+
     answer = { answer };
 
     // submit the question
@@ -186,10 +206,16 @@ async function submit_question() {
 	},
 	body: JSON.stringify(answer)
     });
+    const data = await response.json();
+    const { is_timed_out } = data;
 
     if (response.ok) {
 	console.log('submitted question successfully');
 	quiz();
+    }
+
+    if (is_timed_out) {
+	alert('last question was marked as timed out');
     }
 }
 

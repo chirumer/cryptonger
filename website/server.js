@@ -36,7 +36,7 @@ const Participant = mongoose.model('participants', participant_schema);
 
 const quiz_start_time = 0;
 const quiz_end_time = 0;
-const question_timeout = 5 * 1000; // 30 seconds
+const question_timeout = 10 * 1000; // 30 seconds
 
 app.use(express.static('public'));
 app.use(express.json());
@@ -91,7 +91,11 @@ app.get('/get-question', function(req, res) {
 	const { question, options } = (
 	    questions[req.session.current_question-1]
 	);
-	const to_send = { question, options };
+	const to_send = { 
+	    question, 
+	    options, 
+	    time_left: question_timeout
+	};
 	res.send(JSON.stringify(to_send));
     }
     else {
@@ -110,20 +114,21 @@ app.post('/submit-answer', async function(req,res) {
 	res.send('user not registered', 404);
 	return;
     }
-    console.log(Date.now() - req.session.start_time); 
     if (Date.now() - req.session.start_time > question_timeout) {
 	console.log('user timed out');
 	req.session.answers[req.session.current_question-1] = -1;
 	console.log(req.session.answers);
 	++req.session.current_question;
-	res.sendStatus(200);
+	res.header('Content-Type', 'application/json');
+	res.send('{ "is_timed_out": true }');
     }
     else {
 	console.log(req.body.answer);
 	req.session.answers[req.session.current_question-1] = req.body.answer;
 	console.log(req.session.answers);
 	++req.session.current_question;
-	res.sendStatus(200);
+	res.header('Content-Type', 'application/json');
+	res.send('{ "is_timed_out": false }');
     }
     await Participant.updateOne({_id:req.session.db_id}, {answers:req.session.answers});
 });
@@ -141,7 +146,7 @@ app.post('/register-user', async function(req, res) {
 	name: user.user_name,
 	email: user.user_email,
 	phone_no: user.user_phone,
-	answers: Array(no_of_questions).fill(-1)
+        answers: Array(no_of_questions).fill(-1)
     });
     req.session.db_id = data._id;
     res.sendStatus(200);
